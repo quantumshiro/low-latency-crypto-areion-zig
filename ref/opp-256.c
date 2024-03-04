@@ -15,7 +15,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include "areion.h"
+#include "../include/areion.h"
 
 typedef uint64_t opp_word_t;
 

@@ -1,24 +1,30 @@
 const std = @import("std");
+const areion = @import("include/areion.zig");
+const opp256 = @import("opp-256.zig");
 
-pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
-
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
-
-    try stdout.print("Run `zig build test` to run the tests.\n", .{});
-
-    try bw.flush(); // don't forget to flush!
-}
-
-test "simple test" {
-    var list = std.ArrayList(i32).init(std.testing.allocator);
-    defer list.deinit(); // try commenting this out and see if zig detects the memory leak!
-    try list.append(42);
-    try std.testing.expectEqual(@as(i32, 42), list.pop());
-}
+const RC: [96]i32 = [96]i32{
+    0x243f6a88, 0x85a308d3, 0x13198a2e, 0x03707344,
+    0xa4093822, 0x299f31d0, 0x082efa98, 0xec4e6c89,
+    0x452821e6, 0x38d01377, 0xbe5466cf, 0x34e90c6c,
+    0xc0ac29b7, 0xc97c50dd, 0x3f84d5b5, 0xb5470917,
+    0x9216d5d9, 0x8979fb1b, 0xd1310ba6, 0x98dfb5ac,
+    0x2ffd72db, 0xd01adfb7, 0xb8e1afed, 0x6a267e96,
+    0xba7c9045, 0xf12c7f99, 0x24a19947, 0xb3916cf7,
+    0x801f2e28, 0x58efc166, 0x36920d87, 0x1574e690,
+    0xa458fea3, 0xf4933d7e, 0x0d95748f, 0x728eb658,
+    0x718bcd58, 0x82154aee, 0x7b54a41d, 0xc25a59b5,
+    0x9c30d539, 0x2af26013, 0xc5d1b023, 0x286085f0,
+    0xca417918, 0xb8db38ef, 0x8e79dcb0, 0x603a180e,
+    0x6c9e0e8b, 0xb01e8a3e, 0xd71577c1, 0xbd314b27,
+    0x78af2fda, 0x55605c60, 0xe65525f3, 0xaa55ab94,
+    0x57489862, 0x63e81440, 0x55ca396a, 0x2aab10b6,
+    0xb4cc5c34, 0x1141e8ce, 0xa15486af, 0x7c72e993,
+    0xb3ee1411, 0x636fbc2a, 0x2ba9c55d, 0x741831f6,
+    0xce5c3e16, 0x9b87931e, 0xafd6ba33, 0x6c24cf5c,
+    0x7a325381, 0x28958677, 0x3b8f4898, 0x6b4bb9af,
+    0xc4bfe81b, 0x66282193, 0x61d809cc, 0xfb21a991,
+    0x487cac60, 0x5dec8032, 0xef845d5d, 0xe98575b1,
+    0xdc262302, 0xeb651b88, 0x23893e81, 0xd396acc5,
+    0xf6d6ff38, 0x3f442392, 0xe0b4482a, 0x48420040,
+    0x69c8f04a, 0x9e1f9b5e, 0x21c66842, 0xf6e96c9a,
+};
