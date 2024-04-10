@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <immintrin.h>
 
-#include "areion.h"
+#include "../include/areion.h"
 
 /* Round Constant */
 static const uint32_t RC[24*4] = {
